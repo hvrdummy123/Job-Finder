@@ -1,0 +1,20 @@
+{
+  "jobs": [
+    {
+      "id": 1001,
+      "title": "Software Engineer",
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/1001",
+      "location": { "name": "Bengaluru, India" },
+      "updated_at": "2024-01-15T10:00:00Z",
+      "departments": [{ "name": "Engineering" }]
+    },
+    {
+      "id": 1002,
+      "title": "Senior Backend Engineer",
+      "absolute_url": "https://boards.greenhouse.io/acme/jobs/1002",
+      "location": { "name": "Remote - India" },
+      "updated_at": "2024-01-16T10:00:00Z",
+      "departments": [{ "name": "Engineering" }]
+    }
+  ]
+}

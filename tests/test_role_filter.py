@@ -1,0 +1,58 @@
+from app.ingest.role_filter import is_tech_role, looks_like_job_url
+
+
+def test_keeps_engineering():
+    assert is_tech_role("Senior Software Engineer")
+    assert is_tech_role("Software Development Engineer")
+    assert is_tech_role("Software Development Engineer II")
+    assert is_tech_role("SDE II")
+    assert is_tech_role("Software Developer")
+    assert is_tech_role("Backend Developer")
+    assert is_tech_role("Full Stack Engineer")
+    assert is_tech_role("Quantitative Researcher")
+    assert is_tech_role("ML Engineer")
+    assert is_tech_role("Machine Learning Engineer")
+    assert is_tech_role("Senior Machine Learning Engineer")
+    assert is_tech_role("Sales Engineer")
+    assert is_tech_role("Blockchain Engineer")
+    assert is_tech_role("Solidity Developer")
+    assert is_tech_role("Web3 Protocol Engineer")
+    assert is_tech_role("AI Agent Engineer")
+    assert is_tech_role("Agent Engineer")
+    assert is_tech_role("LLM Engineer")
+    assert is_tech_role("Fintech Engineer")
+    assert is_tech_role("Payments Engineer")
+    assert is_tech_role("Data Analyst")
+    assert is_tech_role("Security Analyst")
+    assert is_tech_role("Quantitative Analyst")
+    assert is_tech_role("Solution Architect")
+    assert is_tech_role("Solutions Architect")
+    assert is_tech_role("Technical Architect")
+    assert is_tech_role("AEM Technical Architect")
+    assert is_tech_role("Application Developer")
+    assert is_tech_role("Member of Technical Staff")
+    assert is_tech_role("Applied Scientist")
+    assert is_tech_role("Research Scientist")
+
+
+def test_drops_non_tech_and_marketing():
+    assert not is_tech_role("HR Business Partner")
+    assert not is_tech_role("Business Development Manager")
+    assert not is_tech_role("Account Executive")
+    assert not is_tech_role("Brazil Diversity Inclusion")
+    assert not is_tech_role("Brazil Milestones")
+    assert not is_tech_role("Recruitment Fraud Alert")
+    assert not is_tech_role("Tcs Mba Hiring 2025")
+    assert not is_tech_role("Internship")
+    assert not is_tech_role("Marketing Analyst")
+    assert not is_tech_role("HR Analyst")
+    assert not is_tech_role("Financial Advisor")
+    assert not is_tech_role("Store Manager")
+
+
+def test_job_urls():
+    assert looks_like_job_url("https://boards.greenhouse.io/stripe/jobs/123")
+    assert looks_like_job_url("https://www.amazon.jobs/en/jobs/123/software-engineer")
+    assert not looks_like_job_url("https://www.tcs.com/careers/india/diversity")
+    assert not looks_like_job_url("https://www.tcs.com/insights/blogs/foo")
+    assert not looks_like_job_url("https://www.tcs.com/careers")

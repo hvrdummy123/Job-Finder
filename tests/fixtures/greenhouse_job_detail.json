@@ -1,0 +1,9 @@
+{
+  "id": 1001,
+  "title": "Software Engineer",
+  "absolute_url": "https://boards.greenhouse.io/acme/jobs/1001",
+  "location": { "name": "Bengaluru, India" },
+  "updated_at": "2024-01-15T10:00:00Z",
+  "content": "<p>We need 2-4 years of experience with Python.</p>",
+  "departments": [{ "name": "Engineering" }]
+}

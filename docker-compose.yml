@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: jobradar
+      POSTGRES_PASSWORD: jobradar
+      POSTGRES_DB: jobradar
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Not published on the host by default (ports often clash with local Postgres).
+    # Seed from inside Compose: docker compose exec app uv run python -m scripts.seed_companies ...
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jobradar -d jobradar"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://jobradar:jobradar@postgres:5432/jobradar
+      HTTP_USER_AGENT: "PersonalJobRadar/0.1 (+local; single-user)"
+      MAX_CONCURRENCY: "96"
+      HOST_CONCURRENCY: "6"
+      MANUAL_CONCURRENCY: "48"
+      DETAIL_CONCURRENCY: "12"
+      TECH_ROLES_ONLY: "true"
+      BIND_HOST: "0.0.0.0"
+      BIND_PORT: "8000"
+    # Bind to loopback on the host — do not expose publicly without a tunnel/VPN
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./:/app
+      # Keep container venv separate from the host .venv (avoids broken macOS symlinks)
+      - app_venv:/app/.venv
+    command: ["uv", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+volumes:
+  pgdata:
+  app_venv:
